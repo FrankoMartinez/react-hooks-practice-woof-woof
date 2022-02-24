@@ -2,10 +2,10 @@ import React from "react";
 
 function DogDetail({ dog }) {
     if (!dog) return <h3>Select a doggo</h3>
-    const { image, name, isGoodDog } = dog
+    const { id, image, name, isGoodDog } = dog
     
-    function handleButtonClick(id) {
-        fetch(`http://localhost:3001/pups/:${id}`, {
+    function handleButtonClick() {
+        fetch(`http://localhost:3001/pups/${id}`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json"
@@ -15,7 +15,9 @@ function DogDetail({ dog }) {
             }),
         })
         .then((res) => res.json())
-        .then((data) => console.log(data))
+        .then((data) => {
+            data.isGoodDog = !data.isGoodDog
+        })
     }
 
     return (
