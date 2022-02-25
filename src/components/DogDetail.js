@@ -1,6 +1,6 @@
 import React from "react";
 
-function DogDetail({ dog }) {
+function DogDetail({ dog, updateIsGoodDog }) {
     if (!dog) return <h3>Select a doggo</h3>
     const { id, image, name, isGoodDog } = dog
     
@@ -11,13 +11,11 @@ function DogDetail({ dog }) {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                isGoodDog: isGoodDog
+                isGoodDog: !isGoodDog
             }),
         })
         .then((res) => res.json())
-        .then((data) => {
-            data.isGoodDog = !data.isGoodDog
-        })
+        .then((data) => updateIsGoodDog(data))
     }
 
     return (
