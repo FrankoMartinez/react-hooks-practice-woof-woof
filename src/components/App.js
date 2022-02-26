@@ -16,6 +16,10 @@ function App() {
 
   const dogSelected = dogs.find((dog) => dog.id === selectedDogId)
 
+  function handleFilter() {
+    setFilter((filter) => !filter)
+  }
+
   function updateIsGoodDog(matchingDog) {
     const mappedDogs = dogs.map((dog) => {
       if (dog.id === matchingDog.id) {
@@ -32,10 +36,15 @@ function App() {
     setFilter((filter) => !filter)
   }
 
+  let displayDogs = dogs
+  if(filter) {
+    displayDogs = displayDogs.filter((dog) => dog.isGoodDog)
+  }
+
   return (
     <div className="App">
       <Filter filter={filter} onFilterClick={handleFilterClick} />
-      <DogBar dogs={dogs} onClickDog={setSelectedDogId}/>
+      <DogBar dogs={displayDogs} onClickDog={setSelectedDogId}/>
       <DogDetail dog={dogSelected} updateIsGoodDog={updateIsGoodDog} />
     </div>
   );
